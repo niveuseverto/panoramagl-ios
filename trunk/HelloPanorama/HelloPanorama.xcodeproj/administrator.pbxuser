@@ -1,0 +1,418 @@
+// !$*UTF8*$!
+{
+	1D3623240D0F684500981E51 /* HelloPanoramaAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 481}}";
+			sepNavSelRange = "{842, 0}";
+			sepNavVisRange = "{0, 905}";
+		};
+	};
+	1D3623250D0F684500981E51 /* HelloPanoramaAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 559}}";
+			sepNavSelRange = "{842, 0}";
+			sepNavVisRange = "{0, 922}";
+		};
+	};
+	1D6058900D05DD3D006BFB54 /* HelloPanorama */ = {
+		activeExec = 0;
+		executables = (
+			C3F1D9B4112E1F72009C9375 /* HelloPanorama */,
+		);
+	};
+	28D7ACF60DDB3853001CB0EB /* HelloPanoramaViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 455}}";
+			sepNavSelRange = "{868, 0}";
+			sepNavVisRange = "{103, 930}";
+		};
+	};
+	28D7ACF70DDB3853001CB0EB /* HelloPanoramaViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 1183}}";
+			sepNavSelRange = "{1753, 0}";
+			sepNavVisRange = "{0, 929}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = C3F1D9B4112E1F72009C9375 /* HelloPanorama */;
+		activeSDKPreference = iphoneos3.1.2;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* HelloPanorama */;
+		addToTargets = (
+			1D6058900D05DD3D006BFB54 /* HelloPanorama */,
+		);
+		breakpoints = (
+			C335CA38112E712700BCCAFB /* PLImage.m:439 */,
+		);
+		codeSenseManager = C3F1D9C1112E1FA1009C9375 /* Code sense */;
+		executables = (
+			C3F1D9B4112E1F72009C9375 /* HelloPanorama */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					735,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 288419178;
+			PBXWorkspaceStateSaveDate = 288419178;
+		};
+		perUserProjectItems = {
+			C34172AA112E2F7800EFCB8A /* PBXTextBookmark */ = C34172AA112E2F7800EFCB8A /* PBXTextBookmark */;
+			C34174F2112E422400EFCB8A /* PBXBookmark */ = C34174F2112E422400EFCB8A /* PBXBookmark */;
+			C341754D112E447000EFCB8A /* PlistBookmark */ = C341754D112E447000EFCB8A /* PlistBookmark */;
+			C3417577112E479800EFCB8A /* PBXBookmark */ = C3417577112E479800EFCB8A /* PBXBookmark */;
+			C34175F9112E533900EFCB8A /* PBXBookmark */ = C34175F9112E533900EFCB8A /* PBXBookmark */;
+			C34175FA112E533900EFCB8A /* PBXBookmark */ = C34175FA112E533900EFCB8A /* PBXBookmark */;
+			C34175FB112E533900EFCB8A /* PBXBookmark */ = C34175FB112E533900EFCB8A /* PBXBookmark */;
+			C3A98DEB1130EDF800A3CAD6 /* PBXTextBookmark */ = C3A98DEB1130EDF800A3CAD6 /* PBXTextBookmark */;
+			C3A98DEC1130EDF800A3CAD6 /* PBXTextBookmark */ = C3A98DEC1130EDF800A3CAD6 /* PBXTextBookmark */;
+			C3A98DED1130EDF800A3CAD6 /* PBXTextBookmark */ = C3A98DED1130EDF800A3CAD6 /* PBXTextBookmark */;
+			C3A98DEF1130EDF800A3CAD6 /* PBXTextBookmark */ = C3A98DEF1130EDF800A3CAD6 /* PBXTextBookmark */;
+			C3A98E1B1130F97600A3CAD6 /* PBXTextBookmark */ = C3A98E1B1130F97600A3CAD6 /* PBXTextBookmark */;
+			C3A98E1C1130F97600A3CAD6 /* PBXTextBookmark */ = C3A98E1C1130F97600A3CAD6 /* PBXTextBookmark */;
+			C3A98E1D1130F97600A3CAD6 /* PBXTextBookmark */ = C3A98E1D1130F97600A3CAD6 /* PBXTextBookmark */;
+			C3A98E1E1130F97600A3CAD6 /* PBXTextBookmark */ = C3A98E1E1130F97600A3CAD6 /* PBXTextBookmark */;
+			C3EAB04E112E64890048B5CB /* PBXTextBookmark */ = C3EAB04E112E64890048B5CB /* PBXTextBookmark */;
+			C3EAB04F112E64890048B5CB /* PBXBookmark */ = C3EAB04F112E64890048B5CB /* PBXBookmark */;
+			C3EAB126112E6DF40048B5CB /* PBXTextBookmark */ = C3EAB126112E6DF40048B5CB /* PBXTextBookmark */;
+			C3F1DA97112E217A009C9375 /* PBXTextBookmark */ = C3F1DA97112E217A009C9375 /* PBXTextBookmark */;
+		};
+		sourceControlManager = C3F1D9C0112E1FA1009C9375 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {914, 382}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 368}";
+		};
+	};
+	32CA4F630368D1EE00C91783 /* HelloPanorama_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {698, 245}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 195}";
+		};
+	};
+	C335CA38112E712700BCCAFB /* PLImage.m:439 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = C3EAB150112E70680048B5CB /* PLImage.m */;
+		functionName = "-deleteImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 439;
+		modificationTime = 288256295.5404741;
+		originalNumberOfMultipleMatches = 0;
+		state = 1;
+	};
+	C3417275112E2DC400EFCB8A /* pano.jpg */ = {
+		uiCtxt = {
+			sepNavWindowFrame = "{{38, 81}, {1051, 671}}";
+		};
+	};
+	C34172AA112E2F7800EFCB8A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 368;
+		vrLoc = 0;
+	};
+	C34173F5112E347A00EFCB8A /* AUTHOR */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 338}}";
+			sepNavSelRange = "{81, 0}";
+			sepNavVisRange = "{0, 82}";
+		};
+	};
+	C34173F6112E347A00EFCB8A /* COPYING */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 2197}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1064}";
+		};
+	};
+	C34173F7112E347A00EFCB8A /* README */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 377}}";
+			sepNavSelRange = "{420, 0}";
+			sepNavVisRange = "{0, 1108}";
+		};
+	};
+	C3417416112E363700EFCB8A /* bottom.jpg */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = image.jpeg;
+		name = bottom.jpg;
+		path = /Users/administrator/Desktop/HelloPanorama/Resources/bottom.jpg;
+		sourceTree = "<absolute>";
+	};
+	C3417417112E363700EFCB8A /* front.jpg */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = image.jpeg;
+		name = front.jpg;
+		path = /Users/administrator/Desktop/HelloPanorama/Resources/front.jpg;
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavWindowFrame = "{{38, 81}, {1051, 671}}";
+		};
+	};
+	C3417418112E363700EFCB8A /* left.jpg */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = image.jpeg;
+		name = left.jpg;
+		path = /Users/administrator/Desktop/HelloPanorama/Resources/left.jpg;
+		sourceTree = "<absolute>";
+	};
+	C3417419112E363700EFCB8A /* right.jpg */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = image.jpeg;
+		name = right.jpg;
+		path = /Users/administrator/Desktop/HelloPanorama/Resources/right.jpg;
+		sourceTree = "<absolute>";
+	};
+	C341741A112E363700EFCB8A /* top.jpg */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = image.jpeg;
+		name = top.jpg;
+		path = /Users/administrator/Desktop/HelloPanorama/Resources/top.jpg;
+		sourceTree = "<absolute>";
+	};
+	C34174F2112E422400EFCB8A /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = C341741A112E363700EFCB8A /* top.jpg */;
+	};
+	C341754D112E447000EFCB8A /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* HelloPanorama-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/administrator/Desktop/HelloPanorama/HelloPanorama-Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	C3417577112E479800EFCB8A /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = C3417275112E2DC400EFCB8A /* pano.jpg */;
+	};
+	C34175F9112E533900EFCB8A /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = C3417416112E363700EFCB8A /* bottom.jpg */;
+	};
+	C34175FA112E533900EFCB8A /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = C3417418112E363700EFCB8A /* left.jpg */;
+	};
+	C34175FB112E533900EFCB8A /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = C3417417112E363700EFCB8A /* front.jpg */;
+	};
+	C3417734112E625D00EFCB8A /* WSMethodInvocation.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = WSMethodInvocation.h;
+		path = /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.2.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/WebServicesCore.framework/Headers/WSMethodInvocation.h;
+		sourceTree = "<absolute>";
+	};
+	C3A98DEB1130EDF800A3CAD6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623240D0F684500981E51 /* HelloPanoramaAppDelegate.h */;
+		name = "HelloPanoramaAppDelegate.h: 22";
+		rLen = 0;
+		rLoc = 842;
+		rType = 0;
+		vrLen = 905;
+		vrLoc = 0;
+	};
+	C3A98DEC1130EDF800A3CAD6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* HelloPanoramaAppDelegate.m */;
+		name = "HelloPanoramaAppDelegate.m: 22";
+		rLen = 0;
+		rLoc = 842;
+		rType = 0;
+		vrLen = 922;
+		vrLoc = 0;
+	};
+	C3A98DED1130EDF800A3CAD6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF60DDB3853001CB0EB /* HelloPanoramaViewController.h */;
+		name = "HelloPanoramaViewController.h: 25";
+		rLen = 0;
+		rLoc = 868;
+		rType = 0;
+		vrLen = 930;
+		vrLoc = 103;
+	};
+	C3A98DEF1130EDF800A3CAD6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF70DDB3853001CB0EB /* HelloPanoramaViewController.m */;
+		name = "HelloPanoramaViewController.m: 69";
+		rLen = 0;
+		rLoc = 2655;
+		rType = 0;
+		vrLen = 1433;
+		vrLoc = 1399;
+	};
+	C3A98E1B1130F97600A3CAD6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C34173F5112E347A00EFCB8A /* AUTHOR */;
+		name = "AUTHOR: 1";
+		rLen = 0;
+		rLoc = 81;
+		rType = 0;
+		vrLen = 82;
+		vrLoc = 0;
+	};
+	C3A98E1C1130F97600A3CAD6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C34173F6112E347A00EFCB8A /* COPYING */;
+		name = "COPYING: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1064;
+		vrLoc = 0;
+	};
+	C3A98E1D1130F97600A3CAD6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C34173F7112E347A00EFCB8A /* README */;
+		name = "README: 9";
+		rLen = 0;
+		rLoc = 420;
+		rType = 0;
+		vrLen = 1108;
+		vrLoc = 0;
+	};
+	C3A98E1E1130F97600A3CAD6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF70DDB3853001CB0EB /* HelloPanoramaViewController.m */;
+		name = "HelloPanoramaViewController.m: 59";
+		rLen = 0;
+		rLoc = 1753;
+		rType = 0;
+		vrLen = 929;
+		vrLoc = 0;
+	};
+	C3EAB04E112E64890048B5CB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C3417734112E625D00EFCB8A /* WSMethodInvocation.h */;
+		name = "WSMethodInvocation.h: 759";
+		rLen = 0;
+		rLoc = 23826;
+		rType = 0;
+		vrLen = 963;
+		vrLoc = 23359;
+	};
+	C3EAB04F112E64890048B5CB /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = C3417419112E363700EFCB8A /* right.jpg */;
+	};
+	C3EAB0D9112E6C9C0048B5CB /* CGDataProvider.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = CGDataProvider.h;
+		path = /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.2.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGDataProvider.h;
+		sourceTree = "<absolute>";
+	};
+	C3EAB126112E6DF40048B5CB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C3EAB0D9112E6C9C0048B5CB /* CGDataProvider.h */;
+		name = "CGDataProvider.h: 11";
+		rLen = 0;
+		rLoc = 264;
+		rType = 0;
+		vrLen = 936;
+		vrLoc = 238;
+	};
+	C3EAB150112E70680048B5CB /* PLImage.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = PLImage.m;
+		path = /Users/administrator/Desktop/PanoramaGL/Classes/PL/PLImage.m;
+		sourceTree = "<absolute>";
+	};
+	C3F1D9B4112E1F72009C9375 /* HelloPanorama */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = HelloPanorama;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	C3F1D9C0112E1FA1009C9375 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	C3F1D9C1112E1FA1009C9375 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	C3F1DA97112E217A009C9375 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 32CA4F630368D1EE00C91783 /* HelloPanorama_Prefix.pch */;
+		name = "HelloPanorama_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 195;
+		vrLoc = 0;
+	};
+}
