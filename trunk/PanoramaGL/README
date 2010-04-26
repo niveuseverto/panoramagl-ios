@@ -1,0 +1,46 @@
+#########################################################################
+#              PanoramaGL library version 0.1 Beta                      #
+#########################################################################
+
+Description
+===========
+
+PanoramaGL library is the first open source library in the world to see 
+panoramic views on the iPod Touch 1G, 2G, 3G and iPhone EDGE, 3G and 3GS.
+
+The features supported in version 0.1 Beta are:
+
+- Supports OpenGLES 1.1
+- Tested with SDK 3.0 to 3.2
+- Supports cubic, spherical and cylindrical panoramic images
+- Allows scrolling and continuous scrolling
+- Supports scrolling left to right and from top to bottom using the 
+  accelerometer
+- Allows to use the inertia to stop scrolling
+- Supports zoom in and zoom out (moving two fingers on the screen)
+- Supports reset (placing three fingers on the screen)
+- Allows you to control the range of rotation in the x, y and z axis
+- Supports Portrait, Portrait Upside Down, Landscape Left and Landscape 
+  Right orientation using the accelerometer
+- Support for events on view (new)
+
+0.1 Beta (April/25/2010):
+=========================
+
+Bugs fixes:
+
+- Memory problem loading new textures.
+- Appearance of images (Distortion).
+- Error using the view orientation.
+- Error detecting touches to use objects over view.
+
+Improvements:
+
+- Support for events on PLView (See PLViewDelegate)
+
+
+
+
+
+
+
