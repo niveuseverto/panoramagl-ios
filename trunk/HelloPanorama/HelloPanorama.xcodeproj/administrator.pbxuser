@@ -1,0 +1,355 @@
+// !$*UTF8*$!
+{
+	1D3623240D0F684500981E51 /* HelloPanoramaAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 468}}";
+			sepNavSelRange = "{843, 0}";
+			sepNavVisRange = "{0, 870}";
+		};
+	};
+	1D3623250D0F684500981E51 /* HelloPanoramaAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 546}}";
+			sepNavSelRange = "{843, 0}";
+			sepNavVisRange = "{0, 922}";
+		};
+	};
+	1D6058900D05DD3D006BFB54 /* HelloPanorama */ = {
+		activeExec = 0;
+		executables = (
+			C3F1D9B4112E1F72009C9375 /* HelloPanorama */,
+		);
+	};
+	28D7ACF60DDB3853001CB0EB /* HelloPanoramaViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 455}}";
+			sepNavSelRange = "{843, 0}";
+			sepNavVisRange = "{0, 888}";
+		};
+	};
+	28D7ACF70DDB3853001CB0EB /* HelloPanoramaViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 1300}}";
+			sepNavSelRange = "{843, 0}";
+			sepNavVisRange = "{0, 886}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = C3F1D9B4112E1F72009C9375 /* HelloPanorama */;
+		activeSDKPreference = iphonesimulator3.1.2;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* HelloPanorama */;
+		addToTargets = (
+			1D6058900D05DD3D006BFB54 /* HelloPanorama */,
+		);
+		breakpoints = (
+			C335CA38112E712700BCCAFB /* PLImage.m:439 */,
+		);
+		codeSenseManager = C3F1D9C1112E1FA1009C9375 /* Code sense */;
+		executables = (
+			C3F1D9B4112E1F72009C9375 /* HelloPanorama */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					735,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 291870703;
+			PBXWorkspaceStateSaveDate = 291870703;
+		};
+		perUserProjectItems = {
+			C341754D112E447000EFCB8A /* PlistBookmark */ = C341754D112E447000EFCB8A /* PlistBookmark */;
+			C3417577112E479800EFCB8A /* PBXBookmark */ = C3417577112E479800EFCB8A /* PBXBookmark */;
+			C3986804116598140026F03F /* PBXTextBookmark */ = C3986804116598140026F03F /* PBXTextBookmark */;
+			C3986805116598140026F03F /* PBXTextBookmark */ = C3986805116598140026F03F /* PBXTextBookmark */;
+			C3986806116598140026F03F /* PBXTextBookmark */ = C3986806116598140026F03F /* PBXTextBookmark */;
+			C3A7511E11659781008F3BFB /* PBXTextBookmark */ = C3A7511E11659781008F3BFB /* PBXTextBookmark */;
+			C3A7511F11659781008F3BFB /* PBXTextBookmark */ = C3A7511F11659781008F3BFB /* PBXTextBookmark */;
+			C3A7512011659781008F3BFB /* PBXTextBookmark */ = C3A7512011659781008F3BFB /* PBXTextBookmark */;
+			C3A7512111659781008F3BFB /* PBXTextBookmark */ = C3A7512111659781008F3BFB /* PBXTextBookmark */;
+			C3A7512211659781008F3BFB /* PBXTextBookmark */ = C3A7512211659781008F3BFB /* PBXTextBookmark */;
+			C3A7512311659781008F3BFB /* PBXTextBookmark */ = C3A7512311659781008F3BFB /* PBXTextBookmark */;
+			C3D1D0291165973B00FFF5C6 /* PBXTextBookmark */ = C3D1D0291165973B00FFF5C6 /* PBXTextBookmark */;
+			C3EAB04E112E64890048B5CB /* PBXTextBookmark */ = C3EAB04E112E64890048B5CB /* PBXTextBookmark */;
+			C3EAB126112E6DF40048B5CB /* PBXTextBookmark */ = C3EAB126112E6DF40048B5CB /* PBXTextBookmark */;
+		};
+		sourceControlManager = C3F1D9C0112E1FA1009C9375 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 429}}";
+			sepNavSelRange = "{843, 0}";
+			sepNavVisRange = "{0, 870}";
+		};
+	};
+	32CA4F630368D1EE00C91783 /* HelloPanorama_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 364}}";
+			sepNavSelRange = "{843, 0}";
+			sepNavVisRange = "{0, 899}";
+		};
+	};
+	C335CA38112E712700BCCAFB /* PLImage.m:439 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = C3EAB150112E70680048B5CB /* PLImage.m */;
+		functionName = "-deleteImage";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 439;
+		modificationTime = 288256295.5404741;
+		originalNumberOfMultipleMatches = 0;
+		state = 1;
+	};
+	C3417275112E2DC400EFCB8A /* pano.jpg */ = {
+		uiCtxt = {
+			sepNavWindowFrame = "{{38, 81}, {1051, 671}}";
+		};
+	};
+	C34173F5112E347A00EFCB8A /* AUTHOR */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 322}}";
+			sepNavSelRange = "{164, 0}";
+			sepNavVisRange = "{0, 164}";
+		};
+	};
+	C34173F6112E347A00EFCB8A /* COPYING */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 2197}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1064}";
+		};
+	};
+	C34173F7112E347A00EFCB8A /* README */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {913, 507}}";
+			sepNavSelRange = "{1129, 0}";
+			sepNavVisRange = "{498, 877}";
+		};
+	};
+	C341754D112E447000EFCB8A /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* HelloPanorama-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/administrator/Desktop/HelloPanorama/HelloPanorama-Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	C3417577112E479800EFCB8A /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = C3417275112E2DC400EFCB8A /* pano.jpg */;
+	};
+	C3417734112E625D00EFCB8A /* WSMethodInvocation.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = WSMethodInvocation.h;
+		path = /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.2.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/WebServicesCore.framework/Headers/WSMethodInvocation.h;
+		sourceTree = "<absolute>";
+	};
+	C3986804116598140026F03F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 22";
+		rLen = 0;
+		rLoc = 843;
+		rType = 0;
+		vrLen = 870;
+		vrLoc = 0;
+	};
+	C3986805116598140026F03F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C34173F7112E347A00EFCB8A /* README */;
+		name = "README: 39";
+		rLen = 0;
+		rLoc = 1375;
+		rType = 0;
+		vrLen = 1077;
+		vrLoc = 0;
+	};
+	C3986806116598140026F03F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C34173F7112E347A00EFCB8A /* README */;
+		name = "README: 28";
+		rLen = 0;
+		rLoc = 1129;
+		rType = 0;
+		vrLen = 877;
+		vrLoc = 498;
+	};
+	C3A7511E11659781008F3BFB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C34173F5112E347A00EFCB8A /* AUTHOR */;
+		name = "AUTHOR: 3";
+		rLen = 0;
+		rLoc = 164;
+		rType = 0;
+		vrLen = 164;
+		vrLoc = 0;
+	};
+	C3A7511F11659781008F3BFB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623240D0F684500981E51 /* HelloPanoramaAppDelegate.h */;
+		name = "HelloPanoramaAppDelegate.h: 22";
+		rLen = 0;
+		rLoc = 843;
+		rType = 0;
+		vrLen = 870;
+		vrLoc = 0;
+	};
+	C3A7512011659781008F3BFB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* HelloPanoramaAppDelegate.m */;
+		name = "HelloPanoramaAppDelegate.m: 22";
+		rLen = 0;
+		rLoc = 843;
+		rType = 0;
+		vrLen = 922;
+		vrLoc = 0;
+	};
+	C3A7512111659781008F3BFB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF60DDB3853001CB0EB /* HelloPanoramaViewController.h */;
+		name = "HelloPanoramaViewController.h: 22";
+		rLen = 0;
+		rLoc = 843;
+		rType = 0;
+		vrLen = 888;
+		vrLoc = 0;
+	};
+	C3A7512211659781008F3BFB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF70DDB3853001CB0EB /* HelloPanoramaViewController.m */;
+		name = "HelloPanoramaViewController.m: 22";
+		rLen = 0;
+		rLoc = 843;
+		rType = 0;
+		vrLen = 886;
+		vrLoc = 0;
+	};
+	C3A7512311659781008F3BFB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 32CA4F630368D1EE00C91783 /* HelloPanorama_Prefix.pch */;
+		name = "HelloPanorama_Prefix.pch: 22";
+		rLen = 0;
+		rLoc = 843;
+		rType = 0;
+		vrLen = 899;
+		vrLoc = 0;
+	};
+	C3D1D0291165973B00FFF5C6 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C34173F6112E347A00EFCB8A /* COPYING */;
+		name = "COPYING: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1064;
+		vrLoc = 0;
+	};
+	C3EAB04E112E64890048B5CB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C3417734112E625D00EFCB8A /* WSMethodInvocation.h */;
+		name = "WSMethodInvocation.h: 759";
+		rLen = 0;
+		rLoc = 23826;
+		rType = 0;
+		vrLen = 963;
+		vrLoc = 23359;
+	};
+	C3EAB0D9112E6C9C0048B5CB /* CGDataProvider.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = CGDataProvider.h;
+		path = /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.2.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGDataProvider.h;
+		sourceTree = "<absolute>";
+	};
+	C3EAB126112E6DF40048B5CB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C3EAB0D9112E6C9C0048B5CB /* CGDataProvider.h */;
+		name = "CGDataProvider.h: 11";
+		rLen = 0;
+		rLoc = 264;
+		rType = 0;
+		vrLen = 936;
+		vrLoc = 238;
+	};
+	C3EAB150112E70680048B5CB /* PLImage.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = PLImage.m;
+		path = /Users/administrator/Desktop/PanoramaGL/Classes/PL/PLImage.m;
+		sourceTree = "<absolute>";
+	};
+	C3F1D9B4112E1F72009C9375 /* HelloPanorama */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = HelloPanorama;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	C3F1D9C0112E1FA1009C9375 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	C3F1D9C1112E1FA1009C9375 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+}
