@@ -50,13 +50,17 @@
 - (void)viewDidLoad 
 {
 	[super viewDidLoad];
-	//Example with Spherical type
 	plView.isDeviceOrientationEnabled = NO;
 	plView.isAccelerometerEnabled = YES;
 	plView.isScrollingEnabled = YES;
 	plView.isInertiaEnabled = YES;
+	//If you don't want zoom controls you must set controlTypeSupported = PLControlTypeSupportedNone;
+	plView.controlTypeSupported = PLControlTypeSupportedZoom;
+
+	//Example with Spherical type
 	plView.type = PLViewTypeSpherical;
 	[plView addTextureAndRelease:[PLTexture textureWithPath:[[NSBundle mainBundle] pathForResource:@"pano" ofType:@"jpg"]]];
+
 	/*
 	//Example with Cube Faces type (you need an image for each cube face)
 	plView.type = PLViewTypeCubeFaces;

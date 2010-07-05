@@ -21,32 +21,25 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-#import <UIKit/UIKit.h>
+#import <OpenGLES/EAGL.h>
+#import "glu.h"
 
-#import "PLMath.h"
 #import "PLEnums.h"
-
-#import "PLViewBase.h"
-#import "PLSceneElement.h"
+#import "PLStructs.h"
+#import "PLUtils.h"
 #import "PLTexture.h"
+#import "PLObject.h"
 
-#import "PLCylinder.h"
-#import "PLSphere.h"
-#import "PLCube.h"
-
-@interface PLView : PLViewBase 
+@interface PLSceneElementBase : PLObject 
 {
-	PLSceneElement * sceneElement;
-	NSMutableArray * textures;
-	PLViewType type;
+	BOOL isVisible, isValid;
+	int identificator;
 }
 
-@property(nonatomic) PLViewType type;
+@property(nonatomic) BOOL isVisible;
+@property(nonatomic, readonly) BOOL isValid;
+@property(nonatomic) int identificator;
 
-- (void)addTexture:(PLTexture *)texture;
-- (void)addTextureAndRelease:(PLTexture *)texture;
-- (void)removeTexture:(PLTexture *)texture;
-- (void)removeTextureAtIndex:(NSUInteger)index;
-- (void)removeAllTextures;
+- (BOOL)render;
 
 @end

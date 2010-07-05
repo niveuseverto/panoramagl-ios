@@ -53,5 +53,6 @@
 
 - (void)addElement:(PLSceneElement *)element;
 - (void)removeElementAtIndex:(NSUInteger)index;
+- (void)removeAllElements;
 
 @end

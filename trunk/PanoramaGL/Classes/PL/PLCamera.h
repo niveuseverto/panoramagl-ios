@@ -21,19 +21,21 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-#import "PLObject.h"
+#import "PLSceneElementBase.h"
 
-@interface PLCamera : PLObject 
+@interface PLCamera : PLSceneElementBase 
 {
 	BOOL isFovEnabled;
 	float fov, fovFactor, fovSensitivity;
-	PLRange fovRange, fovFactorRange;
+	PLRange fovRange;
+	NSUInteger minDistanceToEnableFov;
 }
 
 @property(nonatomic) BOOL isFovEnabled;
 @property(nonatomic) float fov, fovSensitivity;
 @property(nonatomic, readonly) float fovFactor;
-@property(nonatomic) PLRange fovRange, fovFactorRange;
+@property(nonatomic) PLRange fovRange;
+@property(nonatomic) NSUInteger minDistanceToEnableFov;
 
 + (id)camera;
 

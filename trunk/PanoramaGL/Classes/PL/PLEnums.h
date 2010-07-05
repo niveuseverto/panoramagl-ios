@@ -45,3 +45,19 @@ typedef enum
     PLOrientationSupportedLandscapeRight = 8,      // Device oriented horizontally, home button on the left
 	PLOrientationSupportedAll = 15
 } PLOrientationSupported;
+
+typedef enum
+{
+	PLControlTypeSupportedNone = 1,
+	PLControlTypeSupportedZoom = 2,
+	PLControlTypeSupportedAll  = 3
+} PLControlTypeSupported;
+
+typedef enum
+{
+	PLResourceIdNone = 0,
+	PLResourceIdZoomIn,
+	PLResourceIdZoomInOver,
+	PLResourceIdZoomOut,
+	PLResourceIdZoomOutOver
+} PLResourceId;

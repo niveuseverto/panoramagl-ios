@@ -36,7 +36,7 @@
 @synthesize position;
 @synthesize xRange, yRange, zRange;
 
-@synthesize isPitchEnabled, isYawEnabled, isRollEnabled, isReverseRotation;
+@synthesize isPitchEnabled, isYawEnabled, isRollEnabled, isReverseRotation, isYZAxisInverseRotation;
 @synthesize rotation;
 @synthesize pitchRange, yawRange, rollRange;
 @synthesize rotateSensitivity;
@@ -56,7 +56,10 @@
 - (void)initializeValues
 {
 	xRange = yRange = zRange = PLRangeMake(kFloatMinValue, kFloatMaxValue);
-	pitchRange = yawRange = rollRange = PLRangeMake(kDefaultRotateMinRange, kDefaultRotateMaxRange);
+	
+	pitchRange = PLRangeMake(kDefaultPitchMinRange, kDefaultPitchMaxRange);
+	yawRange = PLRangeMake(kDefaultYawMinRange, kDefaultYawMaxRange);
+	rollRange = PLRangeMake(kDefaultRotateMinRange, kDefaultRotateMaxRange);
 	
 	isXAxisEnabled = isYAxisEnabled = isZAxisEnabled = YES;
 	isPitchEnabled = isYawEnabled = isRollEnabled = YES;
@@ -64,14 +67,17 @@
 	rotateSensitivity = kDefaultRotateSensitivity;	
 	isReverseRotation = NO;
 	
+	isYZAxisInverseRotation = YES;
+	
 	oldOrientation = orientation = UIDeviceOrientationUnknown;
+	
+	position = PLPositionMake(0.0f, 0.0f, 0.0f);
 	
 	[self reset];
 }
 
 - (void)reset
 {
-	position = PLPositionMake(0.0f, 0.0f, 0.0f);
 	rotation = PLRotationMake(0.0f, 0.0f, 0.0f);
 }
 
@@ -226,6 +232,8 @@
 	self.isRollEnabled = value.isRollEnabled;
 	
 	self.isReverseRotation = value.isReverseRotation;
+	
+	self.isYZAxisInverseRotation = value.isYZAxisInverseRotation;
 	
 	self.rotateSensitivity = value.rotateSensitivity;
 	

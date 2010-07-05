@@ -23,6 +23,9 @@
 
 @class PLViewBase;
 
+#import "PLStructs.h"
+#import "PLEnums.h"
+
 @protocol PLViewDelegate
 
 @optional

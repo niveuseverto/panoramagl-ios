@@ -27,6 +27,8 @@
 
 - (void)initializeValues;
 
+- (void)calculateFov;
+
 @end
 
 
@@ -35,7 +37,8 @@
 @synthesize isFovEnabled;
 @synthesize fov, fovSensitivity;
 @synthesize fovFactor;
-@synthesize fovRange, fovFactorRange;
+@synthesize fovRange;
+@synthesize minDistanceToEnableFov;
 
 #pragma mark -
 #pragma mark init methods
@@ -50,35 +53,56 @@
 	fovRange = PLRangeMake(kDefaultFovMinValue, kDefaultFovMaxValue);
 	isFovEnabled = YES;
 	fovSensitivity = kDefaultFovSensitivity;
-	fovFactorRange = PLRangeMake(kDefaultFovFactorMinValue, kDefaultFovFactorMaxValue);
+	minDistanceToEnableFov = kDefaultMinDistanceToEnableFov;
 	[super initializeValues];
+	isValid = YES;
 }
 
 - (void)reset
 {
-	self.fov = fovRange.min + ([PLMath distanceBetweenPoints:CGPointMake(fovRange.min, 0.0f) :CGPointMake(fovRange.max, 0.0f)] / 2.0f); 
+	[self calculateFov];
 	[super reset];
 }
 
 #pragma mark -
 #pragma mark fov methods
 
+- (void)calculateFov
+{
+	fov = fovRange.min <= 0.0f ? (fovRange.max >= 0.0f ? 0.0f : fovRange.max) : fovRange.min;
+	self.fov = fov;
+}
+
+- (void)setFovRange:(PLRange)value
+{
+	if(value.max >= value.min)
+	{			
+		fovRange = PLRangeMake(value.min < kFovMinValue ? kFovMinValue : value.min, value.max > kFovMaxValue ? kFovMaxValue : value.max);
+		[self calculateFov];
+	}
+}
+
+- (void)setMinDistanceToEnableFov:(NSUInteger)value
+{
+	if(value > 0)
+		minDistanceToEnableFov = value;
+}
+
+- (void)setFovSensitivity:(float)value
+{
+	if(value > 0.0f)
+		fovSensitivity = value;
+}
+
 - (void)setFov:(float)value
 {
 	if(isFovEnabled)
 	{
 		fov = [PLMath normalizeFov:value range:fovRange];
-		if(fov <= fovRange.min)
-			fovFactor = fovFactorRange.min;
-		else if(fov >= fovRange.max)
-			fovFactor = fovFactorRange.max;
-		else 
-		{
-			if(fov < 0.0f)
-				fovFactor = kFovFactorOffsetValue - ((kFovFactorOffsetValue - fovFactorRange.min) / (fovRange.min/fov));
-			else
-				fovFactor = ABS((fov * (fovFactorRange.max - kFovFactorOffsetValue)) / fovRange.max) + kFovFactorOffsetValue;
-		}
+		if(fov < 0.0f)
+			fovFactor = kFovFactorOffsetValue + kFovFactorNegativeOffsetValue * (fov / kDefaultFovFactorMinValue);
+		else if(fov >= 0.0f)
+			fovFactor = kFovFactorOffsetValue + kFovFactorPositiveOffsetValue * (fov / kDefaultFovFactorMaxValue);
 	}
 }
 
@@ -97,11 +121,29 @@
 
 - (void)cloneCameraProperties:(PLCamera *)value
 {
-	isFovEnabled = value.isFovEnabled;
-	fovRange = value.fovRange;
-	fovFactorRange = value.fovFactorRange;
-	self.fov = value.fov;
 	[super clonePropertiesOf:(PLObject *)value];
+	fovRange = value.fovRange;
+	isFovEnabled = value.isFovEnabled;
+	fovSensitivity = value.fovSensitivity;
+	minDistanceToEnableFov = value.minDistanceToEnableFov;
+	self.fov = value.fov;
+}
+
+#pragma mark -
+#pragma mark render methods
+
+- (void)beginRender
+{
+	[self rotate];
+	[self translate];
+}
+
+- (void)endRender
+{
+}
+
+- (void)internalRender
+{
 }
 
 @end

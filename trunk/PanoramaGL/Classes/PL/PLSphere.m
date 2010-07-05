@@ -43,6 +43,7 @@
 - (void)initializeValues
 {
 	[super initializeValues];
+	quadratic = gluNewQuadric();
 	divs = kDefaultSphereDivs;
 }
 
@@ -50,17 +51,26 @@
 #pragma mark render methods
 
 - (void)internalRender
-{		
-	GLUquadric *quadratic = gluNewQuadric();
+{
 	gluQuadricNormals(quadratic, GLU_SMOOTH);
 	gluQuadricTexture(quadratic, true);
 		
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ((PLTexture *)[textures objectAtIndex:0]).textureId);
 	
-	gluSphere(quadratic, 1.0f, divs, divs);
+	gluSphere(quadratic, kRatio, divs, divs);
 	
-	gluDeleteQuadric(quadratic);
+	glDisable(GL_TEXTURE_2D);
+}
+
+#pragma mark -
+#pragma mark dealloc methods
+
+- (void)dealloc
+{
+	if(quadratic)
+		gluDeleteQuadric(quadratic);
+	[super dealloc];
 }
 
 @end

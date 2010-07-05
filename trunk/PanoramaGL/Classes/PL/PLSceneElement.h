@@ -21,25 +21,17 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-#import <OpenGLES/EAGL.h>
-#import "glu.h"
+#import "PLSceneElementBase.h"
 
-#import "PLEnums.h"
-#import "PLStructs.h"
-#import "PLUtils.h"
-#import "PLTexture.h"
-#import "PLObject.h"
-
-@interface PLSceneElement : PLObject 
+@interface PLSceneElement : PLSceneElementBase 
 {
 	NSMutableArray * textures;
-	BOOL isVisible, isValid;
 }
 
 @property(nonatomic, readonly, getter=getTextures) NSMutableArray * textures;
-@property(nonatomic) BOOL isVisible;
-@property(nonatomic, readonly) BOOL isValid;
 
+- (id)initWithId:(int)identificatorValue;
+- (id)initWithId:(int)identificatorValue texture:(PLTexture *)texture;
 - (id)initWithTexture:(PLTexture *)texture;
 
 - (NSMutableArray *)getTextures;
@@ -48,7 +40,5 @@
 - (void)removeTexture:(PLTexture *)texture;
 - (void)removeTextureAtIndex:(NSUInteger)index;
 - (void)removeAllTextures;
-
-- (BOOL)render;
 
 @end

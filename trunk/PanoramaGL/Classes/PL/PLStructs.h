@@ -44,6 +44,14 @@ struct PLRotation
 };
 typedef struct PLRotation PLRotation;
 
+struct PLShakeData
+{
+	long lastTime;
+	PLPosition shakePosition;
+	PLPosition shakeLastPosition;
+};
+typedef struct PLShakeData PLShakeData;
+
 #pragma mark -
 #pragma mark structs constructors
 
@@ -73,4 +81,11 @@ PLRotationMake(CGFloat pitch, CGFloat yaw, CGFloat roll)
 {
 	PLRotation rotation = {pitch, yaw, roll};
 	return rotation;
+}
+
+CG_INLINE PLShakeData
+PLShakeDataMake(long lastTime)
+{
+	PLShakeData shakeData = {lastTime, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+	return shakeData;
 }

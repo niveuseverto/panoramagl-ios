@@ -46,6 +46,7 @@
 - (void)initializeValues
 {
 	[super initializeValues];
+	quadratic = gluNewQuadric();
 	height = kDefaultCylinderHeight;
 	divs = kDefaultCylinderDivs;
 	isHeightCalculated = kDefaultCylinderHeightCalc;
@@ -60,16 +61,15 @@
 {	
 	glTranslatef(0.0f, 0.0f, -height/2.0f);
 	
-	GLUquadric *quadratic = gluNewQuadric();
 	gluQuadricNormals(quadratic, GLU_SMOOTH);
 	gluQuadricTexture(quadratic, true);
 	
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ((PLTexture *)[textures objectAtIndex:0]).textureId);
 	
-	gluCylinder(quadratic, height/1.2f, height/1.2f, height, divs, divs);
+	gluCylinder(quadratic, kRatio, kRatio, height, divs, divs);
 	
-	gluDeleteQuadric(quadratic);
+	glDisable(GL_TEXTURE_2D);
 }
 
 #pragma mark -
@@ -92,6 +92,16 @@
 - (void)setHeight:(float)value
 {
 	height = ABS(value);
+}
+
+#pragma mark -
+#pragma mark dealloc methods
+
+- (void)dealloc
+{
+	if(quadratic)
+		gluDeleteQuadric(quadratic);
+	[super dealloc];
 }
 
 @end

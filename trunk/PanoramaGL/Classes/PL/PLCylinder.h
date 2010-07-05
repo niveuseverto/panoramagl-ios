@@ -26,6 +26,7 @@
 @interface PLCylinder : PLSceneElement 
 {
 	NSUInteger divs;
+	GLUquadric *quadratic;
 	
 	BOOL isHeightCalculated;
 	float height;

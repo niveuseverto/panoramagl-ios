@@ -32,18 +32,9 @@
 @implementation PLView
 
 @synthesize type;
-@synthesize camera;
 
 #pragma mark -
 #pragma mark init methods
-
-- (void)allocAndInitVariables
-{
-	[super allocAndInitVariables];
-	scene = [PLScene scene];
-	renderer = [PLRenderer rendererWithView:self scene:[scene retain]];
-	camera = [PLCamera camera];
-}
 
 - (void)initializeValues
 {
@@ -54,9 +45,9 @@
 
 - (void)reset
 {
-	if(camera)
-		[camera reset];
 	[super reset];
+	if(scene && scene.currentCamera)
+		[scene.currentCamera reset];
 }
 
 #pragma mark -
@@ -68,17 +59,15 @@
 	if(sceneElement)
 		[sceneElement release];
 	
-	switch (value) {
+	switch (value)
+	{
 		case PLViewTypeCylindrical:
-			camera.fovFactorRange = PLRangeMake(kDefaultCylinderFovFactorMinValue, kDefaultCylinderFovFactorMaxValue);
 			sceneElement = [PLCylinder cylinder];
 			break;
 		case PLViewTypeSpherical:
-			camera.fovFactorRange = PLRangeMake(kDefaultFovFactorMinValue, kDefaultFovFactorMaxValue);
 			sceneElement = [PLSphere sphere];
 			break;
 		case PLViewTypeCubeFaces:
-			camera.fovFactorRange = PLRangeMake(kDefaultFovFactorMinValue, kDefaultFovFactorMaxValue);
 			sceneElement = [PLCube cube];
 			break;
 		case PLViewTypeUnknown:
@@ -94,6 +83,7 @@
 		sceneElement = [sceneElement retain];
 		for(PLTexture * texture in textures)
 			[sceneElement addTexture:texture];
+		[scene removeAllElements];
 		[scene addElement:sceneElement];
 	}
 }
@@ -102,19 +92,11 @@
 #pragma mark draw methods
 
 - (void)drawViewInternally
-{    
+{
 	[super drawViewInternally];
-	
-	[sceneElement clonePropertiesOf:camera];
-	[scene.currentCamera cloneCameraProperties:camera];
-	scene.currentCamera.rotation = PLRotationMake(0.0f, 0.0f, 0.0f);
-	scene.currentCamera.position = PLPositionMake(0.0f, 0.0f, 0.0f);
-	
 	if(!isValidForFov && !isValidForOrientation)
-		[sceneElement rotateWithStartPoint:startPoint endPoint:endPoint sensitivity:camera.rotateSensitivity];
+		[scene.currentCamera rotateWithStartPoint:startPoint endPoint:endPoint sensitivity:scene.currentCamera.rotateSensitivity];
 	[renderer render];
-
-	camera.rotation = PLRotationMake(sceneElement.pitch, sceneElement.yaw, sceneElement.roll);
 }
 
 #pragma mark -
@@ -124,7 +106,6 @@
 {
 	if([super calculateFov:touches])
 	{
-		[camera addFovWithDistance:fovDistance];
 		[scene.currentCamera addFovWithDistance:fovDistance];
 		return YES;
 	}
@@ -136,25 +117,32 @@
 
 - (void)addTexture:(PLTexture *)texture
 {
-	[textures addObject:texture];
-	if(sceneElement)
-		[sceneElement addTexture:texture];
+	if(texture)
+	{
+		[textures addObject:texture];
+		if(sceneElement)
+			[sceneElement addTexture:texture];
+	}
 }
 
 - (void)addTextureAndRelease:(PLTexture *)texture
 {
 	if(texture)
+	{
 		[textures addObject:texture];
-	if(sceneElement)
-		[sceneElement addTextureAndRelease:texture];
+		if(sceneElement)
+			[sceneElement addTextureAndRelease:texture];
+	}
 }
 				
 - (void)removeTexture:(PLTexture *)texture
 {
 	if(texture)
+	{
 		[textures removeObject:texture];
-	if(sceneElement)
-		[sceneElement removeTexture:texture];
+		if(sceneElement)
+			[sceneElement removeTexture:texture];
+	}
 }
 				
 - (void)removeTextureAtIndex:(NSUInteger) index
@@ -176,15 +164,8 @@
 
 - (void)orientationChanged:(UIDeviceOrientation)orientation
 {
-	if(camera && sceneElement)
-	{
-		camera.orientation = orientation;
-		sceneElement.orientation = orientation;
-		camera.pitchRange = sceneElement.pitchRange;
-		camera.yawRange = sceneElement.yawRange;
-		camera.rollRange = sceneElement.rollRange;
-		camera.rotation = PLRotationMake(sceneElement.pitch, sceneElement.yaw, sceneElement.roll);
-	}
+	if(scene && scene.currentCamera)
+		scene.currentCamera.orientation = orientation;
 }
 
 #pragma mark -
@@ -194,14 +175,8 @@
 {    
 	if(textures)
 		[textures release];
-	if(camera)
-		[camera release];
 	if(sceneElement)
 		[sceneElement release];
-	if(scene)
-		[scene release];
-    if(renderer)
-		[renderer release];
 	[super dealloc];
 }
 				

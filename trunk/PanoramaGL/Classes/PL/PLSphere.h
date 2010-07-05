@@ -26,6 +26,7 @@
 @interface PLSphere : PLSceneElement 
 {
 	NSUInteger divs;
+	GLUquadric *quadratic;
 }
 
 @property(nonatomic) NSUInteger divs;

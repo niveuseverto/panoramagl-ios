@@ -21,32 +21,22 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-#import <UIKit/UIKit.h>
+#import "PLControlZoomIn.h"
 
-#import "PLMath.h"
-#import "PLEnums.h"
+@implementation PLControlZoomIn
 
-#import "PLViewBase.h"
-#import "PLSceneElement.h"
-#import "PLTexture.h"
+#pragma mark -
+#pragma mark init methods
 
-#import "PLCylinder.h"
-#import "PLSphere.h"
-#import "PLCube.h"
-
-@interface PLView : PLViewBase 
+- (id)initWithView:(PLViewBase *)plView position:(CGPoint)positionValue size:(CGSize)sizeValue
 {
-	PLSceneElement * sceneElement;
-	NSMutableArray * textures;
-	PLViewType type;
+	self = [super initWithView:plView position:(CGPoint)positionValue size:(CGSize)sizeValue image:PLResourceIdZoomIn overImage:PLResourceIdZoomInOver];
+	return self;
 }
 
-@property(nonatomic) PLViewType type;
-
-- (void)addTexture:(PLTexture *)texture;
-- (void)addTextureAndRelease:(PLTexture *)texture;
-- (void)removeTexture:(PLTexture *)texture;
-- (void)removeTextureAtIndex:(NSUInteger)index;
-- (void)removeAllTextures;
++ (PLControlZoomIn *)controlZoomInWithView:(PLViewBase *)plView position:(CGPoint)positionValue size:(CGSize)sizeValue
+{
+	return [[PLControlZoomIn alloc] initWithView:plView position:positionValue size:sizeValue];
+}
 
 @end

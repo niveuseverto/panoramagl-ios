@@ -28,10 +28,21 @@
 
 #import "PLEnums.h"
 #import "PLMath.h"
+#import "PLScene.h"
+#import "PLCamera.h"
 #import "PLViewDelegate.h"
+#import "PLControlDelegate.h"
+#import "PLControl.h"
+#import "PLControlZoomIn.h"
+#import "PLControlZoomOut.h"
 
-@interface PLViewBase : UIView <UIAccelerometerDelegate> 
+@class PLRenderer;
+
+@interface PLViewBase : UIView <UIAccelerometerDelegate, PLControlDelegate> 
 {
+	PLRenderer * renderer;
+	PLScene * scene;
+	
     NSTimer *animationTimer;
     NSTimeInterval animationInterval;
 	
@@ -56,16 +67,19 @@
 	NSTimeInterval inertiaInterval;
 	float inertiaStepValue;
 	
-	BOOL isResetEnabled;
+	BOOL isResetEnabled, isShakeResetEnabled;
+	
+	PLShakeData shakeData;
 	
 	BOOL isValidForTouch;
 	
-	BOOL isWaiting;
-	
-	NSInteger tapCount;
+	NSMutableArray *controlsArray;
+	PLControlTypeSupported controlTypeSupported;
 	
 	NSObject<PLViewDelegate> *delegate;
 }
+
+@property(nonatomic, readonly, getter=getCamera) PLCamera * camera;
 
 @property(nonatomic) NSTimeInterval animationInterval;
 
@@ -85,9 +99,13 @@
 @property(nonatomic) BOOL isInertiaEnabled;
 @property(nonatomic) NSTimeInterval inertiaInterval;
 
-@property(nonatomic) BOOL isResetEnabled;
+@property(nonatomic) BOOL isResetEnabled, isShakeResetEnabled;
+
+@property(nonatomic) PLControlTypeSupported controlTypeSupported;
 
 @property(nonatomic, assign) NSObject<PLViewDelegate> *delegate;
+
+- (PLCamera *)getCamera;
 
 - (void)reset;
 
@@ -96,6 +114,8 @@
 
 - (void)startAnimation;
 - (void)stopAnimation;
+
+- (UIDeviceOrientation)currentDeviceOrientation;
 
 + (Class)layerClass;
 

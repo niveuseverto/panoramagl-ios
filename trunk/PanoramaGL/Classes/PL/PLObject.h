@@ -32,7 +32,7 @@
 	PLPosition position;
 	PLRange xRange, yRange, zRange;
 	
-	BOOL isPitchEnabled, isYawEnabled, isRollEnabled, isReverseRotation;
+	BOOL isPitchEnabled, isYawEnabled, isRollEnabled, isReverseRotation, isYZAxisInverseRotation;
 	PLRotation rotation;
 	PLRange pitchRange, yawRange, rollRange;
 	float rotateSensitivity;
@@ -47,7 +47,7 @@
 @property(nonatomic, getter=getZ, setter=setZ) float z;
 @property(nonatomic) PLRange xRange, yRange, zRange;
 
-@property(nonatomic) BOOL isPitchEnabled, isYawEnabled, isRollEnabled, isReverseRotation;
+@property(nonatomic) BOOL isPitchEnabled, isYawEnabled, isRollEnabled, isReverseRotation, isYZAxisInverseRotation;
 @property(nonatomic) PLRotation rotation;
 @property(nonatomic, getter=getPitch, setter=setPitch) float pitch;
 @property(nonatomic, getter=getYaw, setter=setYaw) float yaw;

@@ -24,8 +24,9 @@
 #pragma mark -
 #pragma mark utility consts
 
-#define kFloatMinValue FLT_MIN
-#define kFloatMaxValue FLT_MAX
+#define kFloatMinValue -1000000.0f //FLT_MIN
+#define kFloatMaxValue  FLT_MAX
+#define kPI				3.14159265358979323846f
 
 #pragma mark -
 #pragma mark buffer consts
@@ -69,21 +70,31 @@
 #define kDefaultRotateMinRange -180.0f
 #define kDefaultRotateMaxRange  180.0f
 
+#define kDefaultYawMinRange -180.f
+#define kDefaultYawMaxRange  180.f
+
+#define kDefaultPitchMinRange -90.0f
+#define kDefaultPitchMaxRange  90.0f
+
 #pragma mark -
 #pragma mark fov (field of view) consts
 
-#define kDefaultFovSensitivity 70.0f
+#define kDefaultFovSensitivity -1.0f
 
-#define kDefaultFovMinValue -180.0f
-#define kDefaultFovMaxValue  180.0f
+#define kFovMinValue -1.0f
+#define kFovMaxValue  1.0f
 
-#define kDefaultFovFactorMinValue 0.7f
-#define kDefaultFovFactorMaxValue 1.18f
+#define kDefaultFovMinValue 0.0f
+#define kDefaultFovMaxValue kFovMaxValue
 
-#define kDefaultCylinderFovFactorMinValue 0.0f
-#define kDefaultCylinderFovFactorMaxValue 1.18f
+#define kDefaultFovFactorMinValue 0.8f
+#define kDefaultFovFactorMaxValue 1.20f
 
-#define kFovFactorOffsetValue 1.0f
+#define kFovFactorOffsetValue			1.0f
+#define kFovFactorNegativeOffsetValue	(kFovFactorOffsetValue - kDefaultFovFactorMinValue)
+#define kFovFactorPositiveOffsetValue	(kDefaultFovFactorMaxValue - kFovFactorOffsetValue)
+
+#define kDefaultMinDistanceToEnableFov 8
 
 #pragma mark -
 #pragma mark inertia consts
@@ -94,7 +105,7 @@
 #pragma mark accelerometer consts
 
 #define kDefaultAccelerometerSensitivity	7.0f
-#define kDefaultAccelerometerInterval		1.0/30.0
+#define kDefaultAccelerometerInterval		1.0f/30.0f
 #define kAccelerometerSensitivityMinValue	1.0f
 #define kAccelerometerSensitivityMaxValue	10.0f
 #define kAccelerometerMultiplyFactor		100.0f
@@ -103,3 +114,29 @@
 #pragma mark scrolling consts
 
 #define kDefaultMinDistanceToEnableScrolling 50
+
+#pragma mark -
+#pragma mark perspective consts
+
+#define kPerspectiveValue	290.0f
+#define kPerspectiveZNear	0.01f
+#define kPerspectiveZFar	100.0f
+
+#pragma mark -
+#pragma mark scene-elements consts
+
+#define kRatio 1.0f
+
+#pragma mark -
+#pragma mark shake consts
+
+#define kShakeThreshold 100.0f
+#define kShakeDiffTime	100
+
+#pragma mark -
+#pragma mark control consts
+
+#define kZoomControlMinWidth			64
+#define kZoomControlMinHeight			40
+#define kZoomControlWidthPercentage		0.2
+#define kZoomControlHeightPercentage	0.1

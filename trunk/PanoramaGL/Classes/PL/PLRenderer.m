@@ -40,6 +40,7 @@
 
 @synthesize context;
 @synthesize backingWidth, backingHeight;
+@synthesize isUsedDepthBuffer;
 @synthesize view;
 @synthesize scene;
 @synthesize currentOrientation;
@@ -61,9 +62,8 @@
 		
 		self.view = aView;
 		self.scene = aScene;
-		[self.view setMultipleTouchEnabled:YES];
-		[self destroyFramebuffer];
-		[self createFramebuffer];
+		
+		[self initializeValues];
 	}
 	return self;
 }
@@ -76,7 +76,17 @@
 - (void)initializeValues
 {
 	currentOrientation = UIDeviceOrientationUnknown;
-	aspect = 0.0f;
+	isUsedDepthBuffer = kUseDepthBuffer;
+	
+	[self destroyFramebuffer];
+	[self createFramebuffer];
+	aspect = (float)backingWidth/(float)backingHeight;
+	
+	if(scene.currentCamera.fovSensitivity == kDefaultFovSensitivity)
+	{
+		CGSize size = [UIScreen mainScreen].bounds.size;
+		scene.currentCamera.fovSensitivity = ((float)size.width/(float)size.height >= 1.0f ? size.width : size.height) * 10.0f;
+	}
 }
 
 #pragma mark -
@@ -95,7 +105,7 @@
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
     glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
     
-    if (kUseDepthBuffer) 
+    if (isUsedDepthBuffer) 
 	{
         glGenRenderbuffersOES(1, &depthRenderbuffer);
         glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
@@ -140,38 +150,40 @@
 
 - (void)renderWithDeviceOrientation:(UIDeviceOrientation)deviceOrientation
 {
+	UIDeviceOrientation orientation = self.view.isDeviceOrientationEnabled ? deviceOrientation : [self.view currentDeviceOrientation];
+	
+	if(currentOrientation != orientation)
+	{
+		[self destroyFramebuffer];
+		[self createFramebuffer];
+		aspect = (float)backingWidth/(float)backingHeight;
+	}
+	
 	[EAGLContext setCurrentContext:context];
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
-    glViewport(0, 0, backingWidth, backingHeight);
+	
+	glViewport(0, 0, backingWidth, backingHeight);
 	
 	glMatrixMode(GL_PROJECTION);
-	
 	glLoadIdentity();
 	
-	glTranslatef(0.0f, 0.0f, 0.0f);
-	
-	PLCamera * camera = scene.currentCamera;
-	
+	PLCamera * camera = scene.currentCamera;	
 	float zoomFactor = camera.isFovEnabled ? camera.fovFactor : 1.0f ;
+	gluPerspective(kPerspectiveValue * zoomFactor, aspect, kPerspectiveZNear, kPerspectiveZFar);
+	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearDepthf(1.0f);
 	
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	
-	UIDeviceOrientation orientation = self.view.isDeviceOrientationEnabled ? deviceOrientation : [[UIDevice currentDevice] orientation];
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	
-	switch (orientation)
-	{
-		case UIDeviceOrientationUnknown:
-		case UIDeviceOrientationPortrait:
-		case UIDeviceOrientationPortraitUpsideDown:
-			aspect = (float)backingWidth / (float)backingHeight;
-			break;
-		case UIDeviceOrientationLandscapeLeft:
-		case UIDeviceOrientationLandscapeRight:
-			aspect = (float)backingHeight / (float)backingWidth;
-			break;
-	}
-	
-	gluPerspective(280.0f * zoomFactor, aspect, 0.0f, 1.0f);
+	glTranslatef(0, 0, 0);
 	
 	float portraitAngle = 90.0f;
 	float landscapeAngle = 0.0f;
@@ -197,6 +209,13 @@
 	if(landscapeAngle != 0.0f)
 		glRotatef(landscapeAngle, 0.0f, 1.0f, 0.0f);
 	
+	if(camera)
+	{
+		if(currentOrientation != deviceOrientation)
+			camera.orientation = deviceOrientation;
+		[camera render];
+	}
+	
 	for(PLSceneElement * element in scene.elements)
 	{
 		if(currentOrientation != deviceOrientation)
@@ -207,28 +226,8 @@
 	if(currentOrientation != deviceOrientation)
 		currentOrientation = deviceOrientation;
 	
-	glTranslatef(camera.isXAxisEnabled ? camera.x : 0.0f, camera.isYAxisEnabled ? camera.y : 0.0f, camera.isZAxisEnabled ? camera.z : 0.0f);
+	glFlush();
 	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	
-	if(landscapeAngle == 0)
-	{
-		if(camera.isPitchEnabled)
-			glRotatef( (portraitAngle > 0.0f ? camera.pitch : -camera.pitch) * (camera.isReverseRotation ? -1.0f : 1.0f) , 1.0f, 0.0f, 0.0f);
-		if(camera.isYawEnabled)
-			glRotatef( (portraitAngle > 0.0f ? camera.yaw : -camera.yaw) * (camera.isReverseRotation ? -1.0f : 1.0f) , 0.0f, 0.0f, 1.0f );
-	}
-	else
-	{
-		if(camera.isPitchEnabled)
-			glRotatef( (landscapeAngle > 0.0f ? -camera.yaw : camera.yaw) * (camera.isReverseRotation ? -1.0f : 1.0f) , 1.0f, 0.0f, 0.0f );
-		if(camera.isYawEnabled)
-			glRotatef( (landscapeAngle > 0.0f ? camera.pitch : -camera.pitch) * (camera.isReverseRotation ? -1.0f : 1.0f) , 0.0f, 0.0f, 1.0f );
-	}
-	if(camera.isRollEnabled)
-		glRotatef( camera.roll  * (camera.isReverseRotation ? -1.0f : 1.0f) , 0.0f, 1.0f, 0.0f );
-
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
 }

@@ -58,38 +58,39 @@
 
 - (void)internalRender
 {	
+	#define R kRatio
 	static GLfloat cube[] = 
 	{
 		// Front Face
-		-0.5f, -0.5f,  0.5f,
-		0.5f, -0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
-		0.5f,  0.5f,  0.5f,
+		-R, -R,  R,
+		 R, -R,  R,
+		-R,  R,  R,
+		 R,  R,  R,
 		// Back Face
-		-0.5f, -0.5f, -0.5f,
-		-0.5f,  0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		0.5f,  0.5f, -0.5f,
-		// Left Face
-		-0.5f, -0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
-		-0.5f, -0.5f, -0.5f,
-		-0.5f,  0.5f, -0.5f,
+		-R, -R, -R,
+		-R,  R, -R,
+		 R, -R, -R,
+		 R,  R, -R,
 		// Right Face
-		0.5f, -0.5f, -0.5f,
-		0.5f,  0.5f, -0.5f,
-		0.5f, -0.5f,  0.5f,
-		0.5f,  0.5f,  0.5f,
+		-R, -R,  R,
+		-R,  R,  R,
+		-R, -R, -R,
+		-R,  R, -R,
+		// Left Face
+		 R, -R, -R,
+	 	 R,  R, -R,
+		 R, -R,  R,
+		 R,  R,  R,
 		// Top Face
-		-0.5f,  0.5f,  0.5f,
-		0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f, -0.5f,
-		0.5f,  0.5f, -0.5f,
+		-R,  R,  R,
+		 R,  R,  R,
+		-R,  R, -R,
+		 R,  R, -R,
 		// Bottom Face
-		-0.5f, -0.5f,  0.5f,
-		-0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f,  0.5f,
-		0.5f, -0.5f, -0.5f,
+		-R, -R,  R,
+		-R, -R, -R,
+		 R, -R,  R,
+		 R, -R, -R,
 	};
 	
 	static GLfloat textureCoords[] = 
@@ -104,12 +105,12 @@
 		1.0f, 1.0f,
 		0.0f, 0.0f,
 		0.0f, 1.0f,
-		// Left Face
+		// Right Face
 		1.0f, 0.0f,
 		1.0f, 1.0f,
 		0.0f, 0.0f,
 		0.0f, 1.0f,
-		// Right Face
+		// Left Face
 		1.0f, 0.0f,
 		1.0f, 1.0f,
 		0.0f, 0.0f,
@@ -128,9 +129,9 @@
 	
 	glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
 	
-	glClearDepthf(1.0f);
-	
 	glEnable(GL_TEXTURE_2D);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 	
 	glVertexPointer(3, GL_FLOAT, 0, cube);
 	glTexCoordPointer(2, GL_FLOAT, 0, textureCoords);
@@ -141,22 +142,22 @@
 	glCullFace(GL_FRONT);
 	glShadeModel(GL_SMOOTH);
 	
-	glFlush();
-	
 	// Front Face
 	glBindTexture(GL_TEXTURE_2D, ((PLTexture *)[textures objectAtIndex:kCubeFrontFaceIndex]).textureId);
 	glNormal3f(0.0f, 0.0f, 1.0f);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
 	// Back Face
 	glBindTexture(GL_TEXTURE_2D, ((PLTexture *)[textures objectAtIndex:kCubeBackFaceIndex]).textureId);
 	glNormal3f(0.0f, 0.0f, -1.0f);
 	glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);
 	
-	// Left Face
+	// Right Face
 	glBindTexture(GL_TEXTURE_2D, ((PLTexture *)[textures objectAtIndex:kCubeRightFaceIndex]).textureId);
 	glNormal3f(-1.0f, 0.0f, 0.0f);
 	glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);
-	// Right Face
+	
+	// Left Face
 	glBindTexture(GL_TEXTURE_2D, ((PLTexture *)[textures objectAtIndex:kCubeLeftFaceIndex]).textureId);
 	glNormal3f(1.0f, 0.0f, 0.0f);
 	glDrawArrays(GL_TRIANGLE_STRIP, 12, 4);
@@ -165,12 +166,19 @@
 	glBindTexture(GL_TEXTURE_2D, ((PLTexture *)[textures objectAtIndex:kCubeTopFaceIndex]).textureId);
 	glNormal3f(0.0f, 1.0f, 0.0f);
 	glDrawArrays(GL_TRIANGLE_STRIP, 16, 4);
+	
 	// Bottom Face
 	glBindTexture(GL_TEXTURE_2D, ((PLTexture *)[textures objectAtIndex:kCubeBottomFaceIndex]).textureId);
 	glNormal3f(0.0f, -1.0f, 0.0f);
 	glDrawArrays(GL_TRIANGLE_STRIP, 20, 4);
 	
-	glFlush ();
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);	
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+	
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 @end

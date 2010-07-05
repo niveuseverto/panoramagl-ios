@@ -148,6 +148,11 @@
 	[elements removeObjectAtIndex:index];
 }
 
+- (void)removeAllElements
+{
+	[elements removeAllObjects];
+}
+
 #pragma mark -
 #pragma mark dealloc methods
 

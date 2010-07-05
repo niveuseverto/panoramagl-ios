@@ -33,7 +33,7 @@
 - (BOOL)calculateFov:(NSSet *)touches;
 
 - (BOOL)executeDefaultAction:(NSSet *)touches;
-- (BOOL)executeDefaultAction:(NSSet *)touches isFovCalculated:(BOOL)isFovCalculated;
+- (BOOL)executeResetAction:(NSSet *)touches;
 
 - (void)activateAccelerometer;
 - (void)deactiveAccelerometer;
@@ -49,12 +49,19 @@
 - (void)changeOrientation:(UIDeviceOrientation)orientation;
 - (void)orientationChanged:(UIDeviceOrientation)orientation;
 - (BOOL)isOrientationValid:(UIDeviceOrientation)orientation;
-- (UIDeviceOrientation)currentDeviceOrientation;
 
 - (BOOL)isTouchInView:(NSSet *)touches;
 - (CGPoint)getLocationOfFirstTouch:(NSSet *)touches;
 
 - (void)drawViewInternally;
+- (void)drawViewInternallyNTimes:(NSUInteger)times;
+
+- (BOOL)resetWithShake:(UIAcceleration *)acceleration;
+
+- (void)createControls;
+- (void)removeControls;
+- (void)loadControls;
+- (void)changeControlsOrientation;
 
 @end
 
@@ -79,7 +86,9 @@
 @synthesize isInertiaEnabled;
 @synthesize inertiaInterval;
 
-@synthesize isResetEnabled;
+@synthesize isResetEnabled, isShakeResetEnabled;
+
+@synthesize controlTypeSupported;
 
 @synthesize delegate;
 
@@ -104,6 +113,8 @@
 
 - (void)allocAndInitVariables
 {
+	scene = [PLScene scene];
+	renderer = [PLRenderer rendererWithView:self scene:[scene retain]];
 }
 
 - (void)initializeValues
@@ -127,20 +138,36 @@
 	
 	isValidForTouch = NO;
 	
-	isResetEnabled = YES;
+	isResetEnabled = isShakeResetEnabled = YES;
+	
+	shakeData = PLShakeDataMake(0);
+	
+	controlTypeSupported = PLControlTypeSupportedAll;
+	controlsArray = [[NSMutableArray array] retain];
+	[self createControls];
+	[self loadControls];
 	
 	[self reset];
 }
 
 - (void)reset
 {
-	[self stopAnimationInternally];
-	[self stopInertia];
+	[self stopAnimation];
 	isValidForFov = isValidForScrolling = isScrolling = isValidForInertia = isValidForOrientation = NO;
 	startPoint = endPoint = CGPointMake(0.0f, 0.0f);
 	fovDistance = 0.0f;
 	if(isDeviceOrientationEnabled)
 		self.deviceOrientation = [self currentDeviceOrientation];
+}
+
+#pragma mark -
+#pragma mark property method
+
+- (PLCamera *)getCamera
+{
+	if(scene)
+		return scene.currentCamera;
+	return nil;
 }
 
 #pragma mark -
@@ -157,14 +184,10 @@
 - (void)drawView
 {
 	if(isScrolling && delegate && [delegate respondsToSelector:@selector(view:shouldScroll:endPoint:)] && ![delegate view:self shouldScroll:startPoint endPoint:endPoint])
-			return;
+		return;
 	[self drawViewInternally];
 	if(isScrolling && delegate && [delegate respondsToSelector:@selector(view:didScroll:endPoint:)])
 		[delegate view:self didScroll:startPoint endPoint:endPoint];
-}
-
-- (void)drawViewInternally
-{
 }
 
 - (void)drawViewNTimes:(NSUInteger)times
@@ -173,12 +196,22 @@
 		[self drawView];
 }
 
+- (void)drawViewInternally
+{
+}
+
+- (void)drawViewInternallyNTimes:(NSUInteger)times
+{
+	for(int i = 0; i < times; i++)
+		[self drawViewInternally];
+}
+
 - (void)layoutSubviews 
 {
 	[super layoutSubviews];
 	[self activateOrientation];
 	[self activateAccelerometer];
-	[self drawViewNTimes:2];
+	[self drawViewInternallyNTimes:2];
 }
 
 #pragma mark -
@@ -235,15 +268,15 @@
 
 - (BOOL)calculateFov:(NSSet *)touches
 {
-	if([touches count] == 2)
-	{
-		CGPoint point0 = [[[touches allObjects] objectAtIndex:0] locationInView:self];
-		CGPoint point1 = [[[touches allObjects] objectAtIndex:1] locationInView:self];
+	if(![self executeResetAction:touches] && [touches count] == 2)
+	{				
+		startPoint = [[[touches allObjects] objectAtIndex:0] locationInView:self];
+		endPoint = [[[touches allObjects] objectAtIndex:1] locationInView:self];
 		
-		float distance = [PLMath distanceBetweenPoints:point0 :point1];
+		float distance = [PLMath distanceBetweenPoints:startPoint :endPoint];
 		
-		startPoint = point0;
-		endPoint = point1;
+		if(ABS(distance - fovDistance) < scene.currentCamera.minDistanceToEnableFov)
+			return NO;
 		
 		distance = ABS(fovDistance) <= distance ? distance : -distance;
 		BOOL isZoomIn = (distance >= 0);
@@ -251,66 +284,73 @@
 		
 		if(delegate && [delegate respondsToSelector:@selector(view:shouldRunZooming:isZoomIn:isZoomOut:)])
 			isCancelable = [delegate view:self shouldRunZooming:distance isZoomIn:isZoomIn isZoomOut:!isZoomIn];
-				
+		
 		if(!isCancelable)
 		{
 			fovDistance = distance;
 			if(delegate && [delegate respondsToSelector:@selector(view:didRunZooming:isZoomIn:isZoomOut:)])
 				[delegate view:self didRunZooming:fovDistance isZoomIn:isZoomIn isZoomOut:!isZoomIn];
+			return YES;
 		}
-		return YES;
 	}
 	return NO;
 }
 
 - (BOOL)executeDefaultAction:(NSSet *)touches
 {
-	return [self executeDefaultAction: touches isFovCalculated:YES];
-}
-
-- (BOOL)executeDefaultAction:(NSSet *)touches isFovCalculated:(BOOL)isFovCalculated
-{
 	if(isValidForFov)
 		[self calculateFov:touches];
 	else
 	{
-		BOOL isCancelable = NO;
-		switch ([touches count]) 
+		int touchCount = [touches count];
+		if(![self executeResetAction:touches] && touchCount == 2)
 		{
-			case 3:
-				if(isResetEnabled)
-				{
-					if(delegate && [delegate respondsToSelector:@selector(viewShouldReset:)])
-						isCancelable = [delegate viewShouldReset:self];
-					if(!isCancelable)
-					{
-						[self reset];
-						[self drawView];
-						if(delegate && [delegate respondsToSelector:@selector(viewDidReset:)])
-							[delegate viewDidReset:self];
-					}
-				}
-				break;
-			case 2:
-				if(delegate && [delegate respondsToSelector:@selector(viewShouldBeginZooming:)])
-					isCancelable = [delegate viewShouldBeginZooming:self];
-				if(!isCancelable)
-				{
-					isValidForFov = YES;
-					if(isFovCalculated)
-						[self calculateFov:touches];
-					if(delegate && [delegate respondsToSelector:@selector(view:didBeginZooming:endPoint:)])
-						[delegate view:self didBeginZooming:[[[touches allObjects] objectAtIndex:0] locationInView:self] endPoint:[[[touches allObjects] objectAtIndex:1] locationInView:self]];
-				}
-			default:
-				return NO;
+			BOOL isCancelable = NO;
+			if(delegate && [delegate respondsToSelector:@selector(viewShouldBeginZooming:)])
+				isCancelable = [delegate viewShouldBeginZooming:self];
+			if(!isCancelable)
+			{
+				isValidForFov = YES;
+				startPoint = [[[touches allObjects] objectAtIndex:0] locationInView:self];
+				endPoint = [[[touches allObjects] objectAtIndex:1] locationInView:self];
+				[self startAnimation];
+				if(delegate && [delegate respondsToSelector:@selector(view:didBeginZooming:endPoint:)])
+					[delegate view:self didBeginZooming:startPoint endPoint:endPoint];
+			}
 		}
+		else if(touchCount == 1)
+			return NO;
 	}
 	return YES;
 }
 
+- (BOOL)executeResetAction:(NSSet *)touches
+{
+	if(isResetEnabled && [touches count] >= 3) 
+	{
+		BOOL isCancelable = NO;
+		if(delegate && [delegate respondsToSelector:@selector(viewShouldReset:)])
+			isCancelable = [delegate viewShouldReset:self];
+		if(!isCancelable)
+		{
+			[self reset];
+			[self drawViewInternally];
+			isValidForFov = YES;
+			if(delegate && [delegate respondsToSelector:@selector(viewDidReset:)])
+				[delegate viewDidReset:self];
+			return YES;
+		}
+	}
+	return NO;
+}
+
 #pragma mark -
 #pragma mark touch methods
+
+- (BOOL)isMultipleTouchEnabled
+{
+	return YES;
+}
 
 - (BOOL)isTouchInView:(NSSet *)touches
 {
@@ -328,19 +368,20 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event 
 {	
-	if(![self isTouchInView:touches])
-		return;
-	
-	if(delegate && [delegate respondsToSelector:@selector(view:shouldBeginTouching:withEvent:)] && ![delegate view:self shouldBeginTouching:touches withEvent:event])
-		return;
-	
-	tapCount += [touches count];
-	
 	if(isValidForFov)
 		return;
 	
+	NSSet *eventTouches = [event allTouches];
+
+	if(![self isTouchInView:eventTouches])
+		return;
+	
+	if(delegate && [delegate respondsToSelector:@selector(view:shouldBeginTouching:withEvent:)] && ![delegate view:self shouldBeginTouching:eventTouches withEvent:event])
+		return;
+	
 	[self stopInertia];
-	if([[touches anyObject] tapCount] == 2)
+
+	if([[eventTouches anyObject] tapCount] == 2)
 	{
 		if(isValidForScrolling)
 		{
@@ -356,55 +397,56 @@
 	
 	isValidForTouch = YES;
 	
-	if(![self executeDefaultAction:touches isFovCalculated:NO])
+	if(![self executeDefaultAction:eventTouches])
 	{
-		startPoint = endPoint = [self getLocationOfFirstTouch:touches];
+		startPoint = endPoint = [self getLocationOfFirstTouch:eventTouches];
 		[self startAnimation];
 	}
 	
 	if(delegate && [delegate respondsToSelector:@selector(view:didBeginTouching:withEvent:)])
-		[delegate view:self didBeginTouching:touches withEvent:event];
+		[delegate view:self didBeginTouching:eventTouches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if(![self isTouchInView:touches])
+	NSSet *eventTouches = [event allTouches];
+	
+	if(![self isTouchInView:eventTouches])
 		return;
 	
-	if(delegate && [delegate respondsToSelector:@selector(view:shouldTouch:withEvent:)] && ![delegate view:self shouldTouch:touches withEvent:event])
+	if(delegate && [delegate respondsToSelector:@selector(view:shouldTouch:withEvent:)] && ![delegate view:self shouldTouch:eventTouches withEvent:event])
 		return;
 	
-	if(![self executeDefaultAction:touches])
-		endPoint = [self getLocationOfFirstTouch:touches];
+	if(![self executeDefaultAction:eventTouches])
+		endPoint = [self getLocationOfFirstTouch:eventTouches];
 	
 	if(delegate && [delegate respondsToSelector:@selector(view:didTouch:withEvent:)])
-		[delegate view:self didTouch:touches withEvent:event];
+		[delegate view:self didTouch:eventTouches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 { 	
-	if(![self isTouchInView:touches])
+	NSSet *eventTouches = [event allTouches];
+	
+	if(![self isTouchInView:eventTouches])
 		return;
 	
-	if(delegate && [delegate respondsToSelector:@selector(view:shouldEndTouching:withEvent:)] && ![delegate view:self shouldEndTouching:touches withEvent:event])
+	if(delegate && [delegate respondsToSelector:@selector(view:shouldEndTouching:withEvent:)] && ![delegate view:self shouldEndTouching:eventTouches withEvent:event])
 		return;
-	
-	tapCount -= [touches count];
-	
+		
 	if(isValidForFov)
 	{
-		if(tapCount == 0)
+		if([eventTouches count] == [touches count])
 		{
-			[self stopAnimationInternally];
+			[self stopAnimation];
 			isValidForFov = isValidForTouch = NO;
-			startPoint = endPoint = CGPointMake(0.0f, 0.0f);
 		}
 	}
 	else 
 	{
-		if(![self executeDefaultAction:touches isFovCalculated:NO])
+		if(![self executeDefaultAction:eventTouches])
 		{
-			endPoint = [self getLocationOfFirstTouch:touches];
+			endPoint = [self getLocationOfFirstTouch:eventTouches];
 			BOOL isCancelable = NO;
 				
 			if(isScrollingEnabled && delegate && [delegate respondsToSelector:@selector(view:shouldBeingScrolling:endPoint:)])
@@ -450,7 +492,19 @@
 	}
 	
 	if(delegate && [delegate respondsToSelector:@selector(view:didEndTouching:withEvent:)])
-		[delegate view:self didEndTouching:touches withEvent:event];
+		[delegate view:self didEndTouching:eventTouches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if(isValidForFov)
+	{
+		if([[event allTouches] count] == [touches count])
+		{
+			[self stopAnimation];
+			isValidForFov = isValidForTouch = NO;
+		}
+	}
 }
 
 #pragma mark -
@@ -563,6 +617,9 @@
  
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
+	if([self resetWithShake:acceleration])
+		return;
+	
 	if(isValidForTouch || isValidForOrientation)
 		return;
 	
@@ -676,6 +733,7 @@
 		if(delegate && [delegate respondsToSelector:@selector(view:didRotate:)])
 			[delegate view:self didRotate:deviceOrientation];
 	}
+	[self changeControlsOrientation];
 }
 
 - (void)changeOrientation:(UIDeviceOrientation)orientation
@@ -720,13 +778,200 @@
 }
 
 #pragma mark -
+#pragma mark shake methods
+
+- (BOOL)resetWithShake:(UIAcceleration *)acceleration
+{
+	if(!isShakeResetEnabled || !isResetEnabled || isValidForOrientation)
+		return NO;
+	
+	BOOL result = NO;
+	long currentTime = (long)(CACurrentMediaTime() * 1000);
+	
+	if ((currentTime - shakeData.lastTime) > kShakeDiffTime)
+	{
+		long diffTime = (currentTime - shakeData.lastTime);
+		shakeData.lastTime = currentTime;
+		
+		shakeData.shakePosition.x = acceleration.x;
+		shakeData.shakePosition.y = acceleration.y;
+		shakeData.shakePosition.z = acceleration.z;
+		
+		float speed = ABS(shakeData.shakePosition.x + shakeData.shakePosition.y + shakeData.shakePosition.z - shakeData.shakeLastPosition.x - shakeData.shakeLastPosition.y - shakeData.shakeLastPosition.z) / diffTime * 10000;
+		if (speed > kShakeThreshold)
+		{
+			[self reset];
+			[self drawViewInternally];
+			result = YES;
+		}
+		
+		shakeData.shakeLastPosition.x = shakeData.shakePosition.x; 
+		shakeData.shakeLastPosition.y = shakeData.shakePosition.y; 
+		shakeData.shakeLastPosition.z = shakeData.shakePosition.z;
+	}
+	return result;
+}
+
+#pragma mark -
+#pragma mark control methods
+
+- (void)setControlTypeSupported:(PLControlTypeSupported)value
+{
+	controlTypeSupported = value;
+	[self loadControls];
+}
+
+- (void)createControls
+{
+	[self removeControls];
+
+	CGSize size = self.bounds.size;
+	CGSize buttonSize = size.width < size.height ? CGSizeMake(MAX(kZoomControlMinWidth, size.width * kZoomControlWidthPercentage), MAX(kZoomControlMinHeight, size.height * kZoomControlHeightPercentage)) : CGSizeMake(MAX(kZoomControlMinWidth, size.height * kZoomControlWidthPercentage), MAX(kZoomControlMinHeight, size.width * kZoomControlHeightPercentage));
+
+	[controlsArray addObject:[PLControlZoomOut controlZoomOutWithView:self position:CGPointMake(size.width - buttonSize.width * 2, size.height - buttonSize.height) size:buttonSize]];
+	[controlsArray addObject:[PLControlZoomIn controlZoomInWithView:self position:CGPointMake(size.width - buttonSize.width, size.height - buttonSize.height) size:buttonSize]];
+	for(PLControl *control in controlsArray)
+		control.delegate = self;
+}
+		
+- (void)executeAction:(PLControl *)control
+{
+	BOOL isZoomIn = [control isKindOfClass:[PLControlZoomIn class]];
+	CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+	float distance = [PLMath distanceBetweenPoints:CGPointMake(0.0f, 0.0f) :CGPointMake(screenSize.width * 2, screenSize.height * 2)] * (isZoomIn ? 1 : -1);
+		
+	BOOL isCancelable = NO;
+	
+	if(delegate && [delegate respondsToSelector:@selector(view:shouldRunZooming:isZoomIn:isZoomOut:)])
+		isCancelable = [delegate view:self shouldRunZooming:distance isZoomIn:isZoomIn isZoomOut:!isZoomIn];
+	
+	if(!isCancelable)
+	{
+		isValidForFov = YES;
+		fovDistance = distance;
+		[scene.currentCamera addFovWithDistance:fovDistance];
+		[self drawView];
+		if(delegate && [delegate respondsToSelector:@selector(view:didRunZooming:isZoomIn:isZoomOut:)])
+			[delegate view:self didRunZooming:fovDistance isZoomIn:isZoomIn isZoomOut:!isZoomIn];
+		isValidForFov = NO;
+	}
+}
+
+- (void)removeControls
+{
+	for(PLControl *control in controlsArray)
+		[control removeFromView];
+	[controlsArray removeAllObjects];
+}
+
+- (void)loadControls
+{	
+	for(PLControl *control in controlsArray)
+	{
+		if(controlTypeSupported & PLControlTypeSupportedZoom && ([control isKindOfClass:[PLControlZoomIn class]] || [control isKindOfClass:[PLControlZoomOut class]]))
+			[control addToView:self];
+		else
+			[control removeFromView];
+	}
+	[self changeControlsOrientation];
+}
+
+- (void)changeControlsOrientation
+{
+	if(!controlTypeSupported & PLControlTypeSupportedZoom)
+		return;
+	
+	CGSize size = self.bounds.size;
+	if(isDeviceOrientationEnabled)
+	{
+		NSInteger angle = -1;
+		CGPoint pos = CGPointMake(0.0f, 0.0f);
+		switch (deviceOrientation)
+		{
+			case UIDeviceOrientationUnknown:
+			case UIDeviceOrientationPortrait:
+				angle = 0;
+				break;
+			case UIDeviceOrientationPortraitUpsideDown:
+				angle = 180;
+				break;
+			case UIDeviceOrientationLandscapeLeft:
+				angle = 90;
+				break;
+			case UIDeviceOrientationLandscapeRight:
+				angle = -90;
+				break;
+		}
+		
+		if(angle != -1)
+		{
+			for(PLControl *control in controlsArray)
+				control.isVisible = NO;
+			for(PLControl *control in controlsArray)
+			{
+				switch (deviceOrientation)
+				{
+					case UIDeviceOrientationUnknown:
+					case UIDeviceOrientationPortrait:
+						if([control isKindOfClass:[PLControlZoomOut class]])
+							pos = CGPointMake(size.width - control.size.width * 2, size.height - control.size.height);
+						else if([control isKindOfClass:[PLControlZoomIn class]])
+							pos = CGPointMake(size.width - control.size.width, size.height - control.size.height);
+						break;
+					case UIDeviceOrientationPortraitUpsideDown:
+						if([control isKindOfClass:[PLControlZoomOut class]])
+							pos = CGPointMake(control.size.width, 0.0f);
+						else if([control isKindOfClass:[PLControlZoomIn class]])
+							pos = CGPointMake(0.0f, 0.0f);
+						break;
+					case UIDeviceOrientationLandscapeLeft:
+						if([control isKindOfClass:[PLControlZoomOut class]])
+							pos = CGPointMake(0.0f, size.height - control.size.width * 2);
+						else if([control isKindOfClass:[PLControlZoomIn class]])
+							pos = CGPointMake(0.0f, size.height - control.size.width);
+						break;
+					case UIDeviceOrientationLandscapeRight:
+						if([control isKindOfClass:[PLControlZoomOut class]])
+							pos = CGPointMake(size.width - control.size.height, control.size.width);
+						else if([control isKindOfClass:[PLControlZoomIn class]])
+							pos = CGPointMake(size.width - control.size.height, 0.0f);
+						break;
+				}
+				control.position = pos;
+				control.rotate = angle;
+			}
+			for(PLControl *control in controlsArray)
+				control.isVisible = YES;
+		}
+	}
+	else
+	{
+		for(PLControl *control in controlsArray)
+		{
+			if([control isKindOfClass:[PLControlZoomOut class]])
+				control.position = CGPointMake(size.width - control.size.width * 2, size.height - control.size.height);
+			else if([control isKindOfClass:[PLControlZoomIn class]])
+				control.position = CGPointMake(size.width - control.size.width, size.height - control.size.height);
+		}
+	}
+}
+
+#pragma mark -
 #pragma mark dealloc methods
 
 - (void)dealloc 
 {
+	[self reset];
 	[self stopAnimation];
 	[self deactiveOrientation];
 	[self deactiveAccelerometer];
+	[self removeControls];
+	if(controlsArray)
+		[controlsArray release];
+	if(scene)
+		[scene release];
+    if(renderer)
+		[renderer release];
 	[super dealloc];
 }
 				

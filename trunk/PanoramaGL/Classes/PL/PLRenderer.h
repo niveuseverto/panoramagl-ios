@@ -38,6 +38,7 @@
 	GLint backingWidth, backingHeight;
     
     GLuint viewRenderbuffer, viewFramebuffer, depthRenderbuffer;
+	BOOL isUsedDepthBuffer;
 	
 	PLViewBase * view;
 	PLScene * scene;
@@ -48,6 +49,7 @@
 }
 
 @property (nonatomic, readonly) GLint backingWidth, backingHeight;
+@property (nonatomic) BOOL isUsedDepthBuffer;
 @property (nonatomic, retain) PLViewBase * view;
 @property (nonatomic, retain) PLScene * scene;
 @property (nonatomic, readonly) UIDeviceOrientation currentOrientation;

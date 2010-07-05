@@ -40,13 +40,17 @@
 
 - (id)initWithImage:(UIImage *)image;
 - (id)initWithPath:(NSString *)path;
+- (id)initWithPathAndRelease:(NSString *)path;
 - (id)initWithImage:(UIImage *)image rotate:(int)angle;
 - (id)initWithPath:(NSString *)path rotate:(int)angle;
+- (id)initWithPathAndRelease:(NSString *)path rotate:(int)angle;
 
 + (id)textureWithImage:(UIImage *)image;
 + (id)textureWithPath:(NSString *)path;
++ (id)textureWithPathAndRelease:(NSString *)path;
 + (id)textureWithImage:(UIImage *)image rotate:(int)angle;
 + (id)textureWithPath:(NSString *)path rotate:(int)angle;
++ (id)textureWithPathAndRelease:(NSString *)path rotate:(int)angle;
 
 - (BOOL)loadTextureWithImage:(UIImage *)image;
 - (BOOL)loadTextureWithImage:(UIImage *)image rotate:(int)angle;

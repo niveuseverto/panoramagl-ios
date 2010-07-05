@@ -21,32 +21,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-#import <UIKit/UIKit.h>
-
-#import "PLMath.h"
 #import "PLEnums.h"
 
-#import "PLViewBase.h"
-#import "PLSceneElement.h"
-#import "PLTexture.h"
+@interface PLResources : NSObject
 
-#import "PLCylinder.h"
-#import "PLSphere.h"
-#import "PLCube.h"
-
-@interface PLView : PLViewBase 
-{
-	PLSceneElement * sceneElement;
-	NSMutableArray * textures;
-	PLViewType type;
-}
-
-@property(nonatomic) PLViewType type;
-
-- (void)addTexture:(PLTexture *)texture;
-- (void)addTextureAndRelease:(PLTexture *)texture;
-- (void)removeTexture:(PLTexture *)texture;
-- (void)removeTextureAtIndex:(NSUInteger)index;
-- (void)removeAllTextures;
++ (UIImage *)getResourceImageById:(PLResourceId)resourceId;
 
 @end

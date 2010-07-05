@@ -53,6 +53,13 @@
 	return self;
 }
 
+- (id)initWithPathAndRelease:(NSString *)path
+{
+	[self initWithPath:path];
+	[path release];
+	return self;
+}
+
 - (id)initWithImage:(UIImage *)image rotate:(int) angle
 {
 	if(self = [super init])
@@ -67,6 +74,13 @@
 	return self;
 }
 
+- (id)initWithPathAndRelease:(NSString *)path rotate:(int)angle
+{
+	[self initWithPath:path rotate:angle];
+	[path release];
+	return self;
+}
+
 + (id)textureWithImage:(UIImage *)image
 {
 	return [[PLTexture alloc] initWithImage:image];
@@ -77,6 +91,11 @@
 	return [[PLTexture alloc] initWithPath:path];
 }
 
++ (id)textureWithPathAndRelease:(NSString *)path
+{
+	return [[PLTexture alloc] initWithPathAndRelease:path];
+}
+
 + (id)textureWithImage:(UIImage *)image rotate:(int)angle
 {
 	return [[PLTexture alloc] initWithImage:image rotate:angle];
@@ -85,6 +104,11 @@
 + (id)textureWithPath:(NSString *)path rotate:(int)angle;
 {
 	return [[PLTexture alloc] initWithPath:path rotate:angle];
+}
+
++ (id)textureWithPathAndRelease:(NSString *)path rotate:(int)angle
+{
+	return [[PLTexture alloc] initWithPathAndRelease:path rotate:angle];
 }
 
 #pragma mark -
@@ -115,7 +139,7 @@
 	height = plImage.height;
 	
 	if(width > kTextureMaxWidth || height > kTextureMaxHeight)
-		[NSException raise:@"Invalid texture size" format:@"Texture max size is %d x %d", kTextureMaxWidth, kTextureMaxHeight];
+		[NSException raise:@"Invalid texture size" format:@"Texture max size is %d x %d, currently is %d x %d", kTextureMaxWidth, kTextureMaxHeight, width, height];
 	
 	BOOL isResizableImage = NO;
 	if(![PLMath isPowerOfTwo:width])
