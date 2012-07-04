@@ -10,7 +10,7 @@ This guide is a simple guideline to use _*PanoramaGL 0.1*_ library, for more det
 ==1. How to import PanoramaGL library?==
 ----
 
-a. Download _*[http://panoramagl.googlecode.com/files/PanoramaGL_0.1.zip PanoramaGL_0.1.zip]*_ or download the source code from repository<br/>
+a. Download _*[http://panoramagl.googlecode.com/files/PanoramaGL_0.1.zip PanoramaGL_0.1.zip]*_ or download the source code from _*[http://code.google.com/p/panoramagl/source/checkout repository]*_<br/>
 b. If you download the zip file then descompress the file<br/>
 c. Copy PanoramaGL folder inside your project folder<br/>
 d. Import PanoramaGL folder in your project (You can drag and drop the folder inside XCode)<br/>
