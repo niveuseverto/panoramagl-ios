@@ -150,8 +150,8 @@ Also, you can use JSON protocol to load panoramas.
 
 ===See:===
 
-PLJSONLoader class and PLView load method.<br/>
-json.data, json_s2.data and json_cubic.data on _*[http://panoramagl.googlecode.com/files/HelloPanoramaGL.zip HelloPanoramaGL]*_ example.
+_PLJSONLoader_ class and _PLView_ load method.<br/>
+_json.data_, _json_s2.data_ and _json_cubic.data_ on _*[http://panoramagl.googlecode.com/files/HelloPanoramaGL.zip HelloPanoramaGL]*_ example.
 
 ==4. More information==
 ----
