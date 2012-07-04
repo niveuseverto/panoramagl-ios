@@ -101,14 +101,14 @@ Also, you can use JSON protocol to load panoramas.
 
 *_Note:_* JSON protocol is limited for local files in this version.
 
-===Source code:===
+===3.1. Source code:===
 
 {{{
     [plView load:[PLJSONLoader loaderWithPath:[[NSBundle mainBundle] pathForResource:@"json" ofType:@"data"]]];
 }}}
 *_Note:_* For this code, I have a file named json.data in my app. 
 
-===JSON Protocol:===
+===3.2. JSON Protocol:===
 
 {{{
 {
@@ -148,7 +148,7 @@ Also, you can use JSON protocol to load panoramas.
 }
 }}}
 
-===See:===
+===3.3. See:===
 
 _PLJSONLoader_ class and _PLView_ load method.<br/>
 _json.data_, _json_s2.data_ and _json_cubic.data_ on _*[http://panoramagl.googlecode.com/files/HelloPanoramaGL.zip HelloPanoramaGL]*_ example.
