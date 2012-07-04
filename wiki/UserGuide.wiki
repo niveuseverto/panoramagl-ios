@@ -3,7 +3,7 @@
 
 = Introduction =
 
-This guide is a simple guideline to use _*PanoramaGL 0.1*_ library, for more details please check "HelloPanoramaGL" example.
+This guide is a simple guideline to use _*PanoramaGL 0.1*_ library, for more details please check _*[http://panoramagl.googlecode.com/files/HelloPanoramaGL.zip HelloPanoramaGL]*_ example.
 
 = Details =
 
