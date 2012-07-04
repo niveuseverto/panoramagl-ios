@@ -155,5 +155,5 @@ json.data, json_s2.data and json_cubic.data on _*[http://panoramagl.googlecode.c
 
 ==4. More information==
 ----
-* For more details, please check _*[http://panoramagl.googlecode.com/files/HelloPanoramaGL.zip HelloPanoramaGL]*_ example.
-* This example is compatible for iPhone, iPod Touch and iPad.
+For more details, please check _*[http://panoramagl.googlecode.com/files/HelloPanoramaGL.zip HelloPanoramaGL]*_ example.<br/>
+This example is compatible for iPhone, iPod Touch and iPad.
